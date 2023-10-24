@@ -12,6 +12,17 @@ repositories {
     maven {
         url = uri("https://storage.googleapis.com/devan-maven/")
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 
 sourceSets {
@@ -42,7 +53,9 @@ dependencies{
         exclude(group: "com.terraformersmc")
     }
     modImplementation("net.feltmc:felt-enchanting-api:1.0.0-${project.minecraft_version}") { transitive false }
-    modImplementation("earth.terrarium:botarium-fabric-1.18.2:${project.botarium_version}")
+    modImplementation("earth.terrarium:botarium-fabric-1.18.2:${project.botarium_version}"){
+        transitive = false
+    }
     modImplementation(include("com.github.Trinsdar.Felt-API:felt-durability-item-api:c4015755f9")){ transitive false }
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
@@ -75,6 +88,7 @@ dependencies{
     }
     modImplementation("net.minecraftforge:forgeconfigapiport-fabric:3.2.4")
     modRuntimeOnly("dev.latvian.mods:kubejs-fabric:${rootProject.kubejs_version}")
+    modRuntimeOnly "maven.modrinth:modernfix:${rootProject.modernfix_version}"
 }
 
 architectury {
